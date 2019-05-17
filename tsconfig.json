@@ -1,7 +1,10 @@
 {
 	"compilerOptions": {
+    "baseUrl": ".",
+    "paths": { "*": ["types/*"] },
 		"declaration": false,
 		"experimentalDecorators": true,
+		"esModuleInterop": true,
 		"jsx": "react",
 		"jsxFactory": "tsx",
 		"lib": [

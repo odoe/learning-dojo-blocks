@@ -11,20 +11,23 @@
     "test:all": "dojo build --mode unit && dojo build --mode functional && dojo test --all --config local"
   },
   "dependencies": {
-    "@dojo/framework": "^5.0.0",
+    "@dojo/framework": "^5.0.4",
     "@dojo/themes": "^5.0.0",
     "@dojo/widgets": "^5.0.0",
     "tslib": "~1.9.3"
   },
   "devDependencies": {
     "@dojo/cli": "^5.0.0",
-    "@dojo/cli-build-app": "^5.0.0",
+    "@dojo/cli-build-app": "^5.0.4",
     "@dojo/cli-test-intern": "^5.0.0",
-    "@types/node": "~11.13.7",
-    "@types/sharp": "^0.22.1",
-    "@types/showdown": "^1.9.2",
-    "sharp": "^0.22.0",
+    "@types/node": "~12.0.2",
+    "@types/sharp": "^0.22.2",
+    "@types/showdown": "^1.9.3",
+    "remark-parse": "^6.0.3",
+    "remark-vdom": "^7.0.0",
+    "sharp": "^0.22.1",
     "showdown": "^1.9.0",
-    "typescript": "~3.4.5"
+    "typescript": "~3.4.5",
+    "unified": "^7.1.0"
   }
 }

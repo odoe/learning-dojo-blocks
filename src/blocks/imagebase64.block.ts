@@ -1,6 +1,6 @@
 import { resolve } from 'path';
 import { v } from '@dojo/framework/widget-core/d';
-import * as sharp from 'sharp';
+import sharp from 'sharp';
 
 export default async function (path: string) {
   path = resolve(__dirname, path);
