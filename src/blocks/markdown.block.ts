@@ -1,36 +1,32 @@
-import fs from 'fs';
-import { resolve } from 'path';
-import { v } from '@dojo/framework/widget-core/d';
+const { resolve } = require('path');
+const fs = require('fs');
 
 // import { Converter } from 'showdown';
-import unified from 'unified';
-import markdown from 'remark-parse';
-import vdom from 'remark-vdom';
+const unified = require('unified');
+const markdown = require('remark-parse');
+const remark2rehype = require('remark-rehype');
+const toH = require('hast-to-hyperscript');
+const { v } = require('@dojo/framework/widget-core/d');
+const slug = require('rehype-slug');
 
 // const mdConverter = new Converter();
 
-export default function (path: string) {
-  path = resolve(__dirname, path);
-  const file = fs.readFileSync(path, 'utf8');
-  // convert Markdown to HTML
-  // const html = mdConverter.makeHtml(file);
-  const vnodes = unified()
-      .use(markdown as any)
-      .use(vdom as any, { h: v })
-      .parse(file);
-  // const vnodes = await new Promise<any>((res, rej) => {
-  //   unified()
-  //   .use(markdown as any)
-  //   .use(vdom as any, { h: v })
-  //   .process(file, function(err, f) {
-  //     if (err) rej(err);
-  //     res(f.contents);
-  //     console.dir(f.contents, {depth: null})
-  //   })
-  // });
-  console.dir('HAVE VNODES');
-  console.dir(vnodes);
-  return vnodes;
+function process(content: string) {
+	let counter = 0;
+	const pipeline = unified().use(markdown as any, { commonmark: true }).use(remark2rehype).use(slug);
 
-  // return html
-};
+	const nodes = pipeline.parse(content);
+	const result = pipeline.runSync(nodes);
+	return toH((tag: string, props: any, children: any[]) => v(tag, { ...props, key: counter++ }, children), result);
+}
+
+export default function(path: string) {
+	path = resolve(__dirname, path);
+	const file = fs.readFileSync(path, 'utf8');
+	// convert Markdown to HTML
+	// const html = mdConverter.makeHtml(file);
+	const vnodes = process(file);
+	return vnodes;
+
+	// return html
+}
